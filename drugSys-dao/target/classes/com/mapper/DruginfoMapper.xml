@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.DruginfoMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Druginfo" >
+    <id column="diId" property="diid" jdbcType="VARCHAR" />
+    <result column="ddId" property="ddid" jdbcType="VARCHAR" />
+    <result column="diName" property="diname" jdbcType="VARCHAR" />
+    <result column="commonName" property="commonname" jdbcType="VARCHAR" />
+    <result column="barCode" property="barcode" jdbcType="VARCHAR" />
+    <result column="drugUnit" property="drugunit" jdbcType="VARCHAR" />
+    <result column="specification" property="specification" jdbcType="VARCHAR" />
+    <result column="drugType" property="drugtype" jdbcType="VARCHAR" />
+    <result column="registered" property="registered" jdbcType="VARCHAR" />
+    <result column="approval" property="approval" jdbcType="VARCHAR" />
+    <result column="miniStock" property="ministock" jdbcType="INTEGER" />
+    <result column="singelPrice" property="singelprice" jdbcType="DECIMAL" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="bargainPrice" property="bargainprice" jdbcType="DECIMAL" />
+    <result column="manufacturer" property="manufacturer" jdbcType="VARCHAR" />
+    <result column="drugRemarks" property="drugremarks" jdbcType="VARCHAR" />
+    <result column="isEphedrine" property="isephedrine" jdbcType="TINYINT" />
+    <result column="supervision" property="supervision" jdbcType="TINYINT" />
+    <result column="disable" property="disable" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    diId, ddId, diName, commonName, barCode, drugUnit, specification, drugType, registered, 
+    approval, miniStock, singelPrice, price, bargainPrice, manufacturer, drugRemarks, 
+    isEphedrine, supervision, disable
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.DruginfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from drugInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from drugInfo
+    where diId = #{diid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from drugInfo
+    where diId = #{diid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.DruginfoExample" >
+    delete from drugInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Druginfo" >
+    insert into drugInfo (diId, ddId, diName, 
+      commonName, barCode, drugUnit, 
+      specification, drugType, registered, 
+      approval, miniStock, singelPrice, 
+      price, bargainPrice, manufacturer, 
+      drugRemarks, isEphedrine, supervision, 
+      disable)
+    values (#{diid,jdbcType=VARCHAR}, #{ddid,jdbcType=VARCHAR}, #{diname,jdbcType=VARCHAR}, 
+      #{commonname,jdbcType=VARCHAR}, #{barcode,jdbcType=VARCHAR}, #{drugunit,jdbcType=VARCHAR}, 
+      #{specification,jdbcType=VARCHAR}, #{drugtype,jdbcType=VARCHAR}, #{registered,jdbcType=VARCHAR}, 
+      #{approval,jdbcType=VARCHAR}, #{ministock,jdbcType=INTEGER}, #{singelprice,jdbcType=DECIMAL}, 
+      #{price,jdbcType=DECIMAL}, #{bargainprice,jdbcType=DECIMAL}, #{manufacturer,jdbcType=VARCHAR}, 
+      #{drugremarks,jdbcType=VARCHAR}, #{isephedrine,jdbcType=TINYINT}, #{supervision,jdbcType=TINYINT}, 
+      #{disable,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Druginfo" >
+    insert into drugInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="diid != null" >
+        diId,
+      </if>
+      <if test="ddid != null" >
+        ddId,
+      </if>
+      <if test="diname != null" >
+        diName,
+      </if>
+      <if test="commonname != null" >
+        commonName,
+      </if>
+      <if test="barcode != null" >
+        barCode,
+      </if>
+      <if test="drugunit != null" >
+        drugUnit,
+      </if>
+      <if test="specification != null" >
+        specification,
+      </if>
+      <if test="drugtype != null" >
+        drugType,
+      </if>
+      <if test="registered != null" >
+        registered,
+      </if>
+      <if test="approval != null" >
+        approval,
+      </if>
+      <if test="ministock != null" >
+        miniStock,
+      </if>
+      <if test="singelprice != null" >
+        singelPrice,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="bargainprice != null" >
+        bargainPrice,
+      </if>
+      <if test="manufacturer != null" >
+        manufacturer,
+      </if>
+      <if test="drugremarks != null" >
+        drugRemarks,
+      </if>
+      <if test="isephedrine != null" >
+        isEphedrine,
+      </if>
+      <if test="supervision != null" >
+        supervision,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="diid != null" >
+        #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="ddid != null" >
+        #{ddid,jdbcType=VARCHAR},
+      </if>
+      <if test="diname != null" >
+        #{diname,jdbcType=VARCHAR},
+      </if>
+      <if test="commonname != null" >
+        #{commonname,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null" >
+        #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="drugunit != null" >
+        #{drugunit,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="drugtype != null" >
+        #{drugtype,jdbcType=VARCHAR},
+      </if>
+      <if test="registered != null" >
+        #{registered,jdbcType=VARCHAR},
+      </if>
+      <if test="approval != null" >
+        #{approval,jdbcType=VARCHAR},
+      </if>
+      <if test="ministock != null" >
+        #{ministock,jdbcType=INTEGER},
+      </if>
+      <if test="singelprice != null" >
+        #{singelprice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="bargainprice != null" >
+        #{bargainprice,jdbcType=DECIMAL},
+      </if>
+      <if test="manufacturer != null" >
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="drugremarks != null" >
+        #{drugremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="isephedrine != null" >
+        #{isephedrine,jdbcType=TINYINT},
+      </if>
+      <if test="supervision != null" >
+        #{supervision,jdbcType=TINYINT},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.DruginfoExample" resultType="java.lang.Integer" >
+    select count(*) from drugInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update drugInfo
+    <set >
+      <if test="record.diid != null" >
+        diId = #{record.diid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ddid != null" >
+        ddId = #{record.ddid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diname != null" >
+        diName = #{record.diname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commonname != null" >
+        commonName = #{record.commonname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.barcode != null" >
+        barCode = #{record.barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugunit != null" >
+        drugUnit = #{record.drugunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specification != null" >
+        specification = #{record.specification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugtype != null" >
+        drugType = #{record.drugtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registered != null" >
+        registered = #{record.registered,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approval != null" >
+        approval = #{record.approval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ministock != null" >
+        miniStock = #{record.ministock,jdbcType=INTEGER},
+      </if>
+      <if test="record.singelprice != null" >
+        singelPrice = #{record.singelprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bargainprice != null" >
+        bargainPrice = #{record.bargainprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.manufacturer != null" >
+        manufacturer = #{record.manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugremarks != null" >
+        drugRemarks = #{record.drugremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isephedrine != null" >
+        isEphedrine = #{record.isephedrine,jdbcType=TINYINT},
+      </if>
+      <if test="record.supervision != null" >
+        supervision = #{record.supervision,jdbcType=TINYINT},
+      </if>
+      <if test="record.disable != null" >
+        disable = #{record.disable,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update drugInfo
+    set diId = #{record.diid,jdbcType=VARCHAR},
+      ddId = #{record.ddid,jdbcType=VARCHAR},
+      diName = #{record.diname,jdbcType=VARCHAR},
+      commonName = #{record.commonname,jdbcType=VARCHAR},
+      barCode = #{record.barcode,jdbcType=VARCHAR},
+      drugUnit = #{record.drugunit,jdbcType=VARCHAR},
+      specification = #{record.specification,jdbcType=VARCHAR},
+      drugType = #{record.drugtype,jdbcType=VARCHAR},
+      registered = #{record.registered,jdbcType=VARCHAR},
+      approval = #{record.approval,jdbcType=VARCHAR},
+      miniStock = #{record.ministock,jdbcType=INTEGER},
+      singelPrice = #{record.singelprice,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=DECIMAL},
+      bargainPrice = #{record.bargainprice,jdbcType=DECIMAL},
+      manufacturer = #{record.manufacturer,jdbcType=VARCHAR},
+      drugRemarks = #{record.drugremarks,jdbcType=VARCHAR},
+      isEphedrine = #{record.isephedrine,jdbcType=TINYINT},
+      supervision = #{record.supervision,jdbcType=TINYINT},
+      disable = #{record.disable,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Druginfo" >
+    update drugInfo
+    <set >
+      <if test="ddid != null" >
+        ddId = #{ddid,jdbcType=VARCHAR},
+      </if>
+      <if test="diname != null" >
+        diName = #{diname,jdbcType=VARCHAR},
+      </if>
+      <if test="commonname != null" >
+        commonName = #{commonname,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null" >
+        barCode = #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="drugunit != null" >
+        drugUnit = #{drugunit,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="drugtype != null" >
+        drugType = #{drugtype,jdbcType=VARCHAR},
+      </if>
+      <if test="registered != null" >
+        registered = #{registered,jdbcType=VARCHAR},
+      </if>
+      <if test="approval != null" >
+        approval = #{approval,jdbcType=VARCHAR},
+      </if>
+      <if test="ministock != null" >
+        miniStock = #{ministock,jdbcType=INTEGER},
+      </if>
+      <if test="singelprice != null" >
+        singelPrice = #{singelprice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="bargainprice != null" >
+        bargainPrice = #{bargainprice,jdbcType=DECIMAL},
+      </if>
+      <if test="manufacturer != null" >
+        manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="drugremarks != null" >
+        drugRemarks = #{drugremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="isephedrine != null" >
+        isEphedrine = #{isephedrine,jdbcType=TINYINT},
+      </if>
+      <if test="supervision != null" >
+        supervision = #{supervision,jdbcType=TINYINT},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=TINYINT},
+      </if>
+    </set>
+    where diId = #{diid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Druginfo" >
+    update drugInfo
+    set ddId = #{ddid,jdbcType=VARCHAR},
+      diName = #{diname,jdbcType=VARCHAR},
+      commonName = #{commonname,jdbcType=VARCHAR},
+      barCode = #{barcode,jdbcType=VARCHAR},
+      drugUnit = #{drugunit,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=VARCHAR},
+      drugType = #{drugtype,jdbcType=VARCHAR},
+      registered = #{registered,jdbcType=VARCHAR},
+      approval = #{approval,jdbcType=VARCHAR},
+      miniStock = #{ministock,jdbcType=INTEGER},
+      singelPrice = #{singelprice,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      bargainPrice = #{bargainprice,jdbcType=DECIMAL},
+      manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      drugRemarks = #{drugremarks,jdbcType=VARCHAR},
+      isEphedrine = #{isephedrine,jdbcType=TINYINT},
+      supervision = #{supervision,jdbcType=TINYINT},
+      disable = #{disable,jdbcType=TINYINT}
+    where diId = #{diid,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 分页查询二级分类下的所有药品信息 -->
+  
+  <select id="getDrugsByPage" resultType="Druginfo">
+  	select * from drugInfo 
+  	<where>
+  		ddid = #{ddid}
+		<if test="diname != null and diname != ''">
+			and diname like '%${diname}%' 
+		</if>
+		<if test="diid != null and diid != ''">
+			and diid like '%${diid}%' 
+		</if>
+	</where>
+	 limit #{pageIndex} , #{pageSize}
+  </select>
+  
+  <!-- 二级分类下的所有药品的数量 -->
+  <select id="getDrugsCount" resultType="Integer">
+  	select count(1) from drugInfo 
+	<where>
+  		<if test="ddid != null and ddid != '' and ddid !='null'">
+  			and ddId = #{ddid}
+  		</if>
+		<if test="diname != null and diname != ''">
+			and diName like '%${diname}%' 
+		</if>
+		<if test="diid != null and diid != ''">
+			and diId like '%${diid}%' 
+		</if>
+	</where>
+  </select>
+  <!-- 显示所有药品 -->	
+  <select id="showAllDrugs" resultType="Druginfo">
+  	select * from drugInfo 
+  	<where>
+  		<if test="ddid != null and ddid != '' and ddid !='null'">
+  			and ddId = #{ddid}
+  		</if>
+  		<if test="diname != null and diname != ''">
+  			and diName like '%${diname}%'
+  		</if>
+  	</where>
+	 limit #{startIndex} , #{pageSize}
+  </select>
+  
+  <!-- 根据id查询药品信息 -->
+  <select id="getDrugById" parameterType="String" resultType="Druginfo">
+  	select 
+		di.diId as diid, di.ddId as ddid, dd.ddName as ddname, dt.dtName as dtname, di.diName as diname,
+		di.commonName as commonname, di.barCode as barcode,di.drugUnit as drugunit,di.specification as specification,
+		di.drugType as drugtype,di.registered as registered,di.approval as approval,di.miniStock as ministock,
+		di.singelPrice as singelprice,di.price as price,di.bargainPrice as bargainprice,di.manufacturer as manufacturer,
+		di.drugRemarks as drugremarks,di.isEphedrine as isephedrine,di.supervision as supervision,di.disable as disable
+	 from drugInfo di, drugDetailed dd,drugTotal dt where di.ddId = dd.ddId and dd.dtId = dt.dtId 
+  	and di.diid = #{diid}
+  </select>	
+  	
+  	
+  	
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.CheckMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Check" >
+    <id column="cid" property="cid" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="wid" property="wid" jdbcType="VARCHAR" />
+    <result column="sfid" property="sfid" jdbcType="VARCHAR" />
+    <result column="goodsentry" property="goodsentry" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cid, date, wid, sfid, goodsentry, amount, comment
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.CheckExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from check
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from check
+    where cid = #{cid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from check
+    where cid = #{cid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.CheckExample" >
+    delete from check
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Check" >
+    insert into `check`
+    values (#{cid,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{wid,jdbcType=VARCHAR}, 
+      #{sfid,jdbcType=VARCHAR}, #{goodsentry,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Check" >
+    insert into check
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="wid != null" >
+        wid,
+      </if>
+      <if test="sfid != null" >
+        sfid,
+      </if>
+      <if test="goodsentry != null" >
+        goodsentry,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="wid != null" >
+        #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfid != null" >
+        #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsentry != null" >
+        #{goodsentry,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.CheckExample" resultType="java.lang.Integer" >
+    select count(*) from check
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update check
+    <set >
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.wid != null" >
+        wid = #{record.wid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfid != null" >
+        sfid = #{record.sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsentry != null" >
+        goodsentry = #{record.goodsentry,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update check
+    set cid = #{record.cid,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE},
+      wid = #{record.wid,jdbcType=VARCHAR},
+      sfid = #{record.sfid,jdbcType=VARCHAR},
+      goodsentry = #{record.goodsentry,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Check" >
+    update check
+    <set >
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="wid != null" >
+        wid = #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfid != null" >
+        sfid = #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsentry != null" >
+        goodsentry = #{goodsentry,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Check" >
+    update check
+    set date = #{date,jdbcType=DATE},
+      wid = #{wid,jdbcType=VARCHAR},
+      sfid = #{sfid,jdbcType=VARCHAR},
+      goodsentry = #{goodsentry,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+ <!-- 条件查询,时间段查询 -->
+  <select id="getAllCheck" parameterType="com.domain.PageCriterias" resultType="com.domain.Check" >
+  			SELECT * 
+  			FROM
+			`check` ck,staff s
+			<where>
+				ck.sfid= s.sfId 
+			<if test="null != beignDate and beignDate != ''">
+                and date&gt;=#{beignDate}
+            </if>
+           <if test="null != endDate and endDate != ''">
+                and date&lt;=#{endDate}
+            </if>
+			</where>
+				group by cid
+				limit #{offset},#{pageSize}
+  </select>
+  <!-- 统计所有盘点单条数 -->
+  <select id="getTotalCheckEntry" parameterType="com.domain.PageCriterias" resultType="Integer">
+  		select count(*)
+  		from (SELECT ck.cid
+  			FROM
+			`check` ck,staff s
+			<where>
+				ck.sfid= s.sfId 
+			<if test="null != beignDate and beignDate != ''">
+                and date&gt;=#{beignDate}
+            </if>
+           <if test="null != endDate and endDate != ''">
+                and date&lt;=#{endDate}
+            </if>
+			</where>
+				group by cid)
+  		as temps
+  </select>
+</mapper>

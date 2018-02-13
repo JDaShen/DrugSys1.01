@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.DispatchMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Dispatch" >
+    <id column="dispId" property="dispid" jdbcType="VARCHAR" />
+    <result column="from" property="from" jdbcType="VARCHAR" />
+    <result column="to" property="to" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="sfid" property="sfid" jdbcType="VARCHAR" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dispId, from, to, date, sfid, mark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.DispatchExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dispatch
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dispatch
+    where dispId = #{dispid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dispatch
+    where dispId = #{dispid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.DispatchExample" >
+    delete from dispatch
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Dispatch" >
+    insert into dispatch (dispId, from, to, 
+      date, sfid, mark)
+    values (#{dispid,jdbcType=VARCHAR}, #{from,jdbcType=VARCHAR}, #{to,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{sfid,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Dispatch" >
+    insert into dispatch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dispid != null" >
+        dispId,
+      </if>
+      <if test="from != null" >
+        from,
+      </if>
+      <if test="to != null" >
+        to,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="sfid != null" >
+        sfid,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dispid != null" >
+        #{dispid,jdbcType=VARCHAR},
+      </if>
+      <if test="from != null" >
+        #{from,jdbcType=VARCHAR},
+      </if>
+      <if test="to != null" >
+        #{to,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="sfid != null" >
+        #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.DispatchExample" resultType="java.lang.Integer" >
+    select count(*) from dispatch
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dispatch
+    <set >
+      <if test="record.dispid != null" >
+        dispId = #{record.dispid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.from != null" >
+        from = #{record.from,jdbcType=VARCHAR},
+      </if>
+      <if test="record.to != null" >
+        to = #{record.to,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.sfid != null" >
+        sfid = #{record.sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mark != null" >
+        mark = #{record.mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dispatch
+    set dispId = #{record.dispid,jdbcType=VARCHAR},
+      from = #{record.from,jdbcType=VARCHAR},
+      to = #{record.to,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE},
+      sfid = #{record.sfid,jdbcType=VARCHAR},
+      mark = #{record.mark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Dispatch" >
+    update dispatch
+    <set >
+      <if test="from != null" >
+        from = #{from,jdbcType=VARCHAR},
+      </if>
+      <if test="to != null" >
+        to = #{to,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="sfid != null" >
+        sfid = #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dispId = #{dispid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Dispatch" >
+    update dispatch
+    set from = #{from,jdbcType=VARCHAR},
+      to = #{to,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
+      sfid = #{sfid,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=VARCHAR}
+    where dispId = #{dispid,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertOnes" parameterType="com.domain.Dispatch" >
+    insert into dispatch
+        values (#{dispid}, #{from}, #{to}, 
+      #{date}, #{sfid}, #{mark})
+  </insert>
+  <!-- 查询所有调度单 -->
+  <select id="getAllDispatcher" parameterType="com.domain.PageCriterias" resultType="com.domain.ShowDispatchVo">
+  		select * 
+  		from 
+  		dispatch d,staff s,warehouse w
+  		<where>
+  			 s.sfid = d.sfId
+  			 	<if test="null != beignDate and beignDate != ''">
+                and date&gt;=#{beignDate}
+            </if>
+           <if test="null != endDate and endDate != ''">
+                and date&lt;=#{endDate}
+            </if>
+  		</where>
+		GROUP BY dispId
+  		limit #{offset},#{pageSize}
+  </select>
+  <!-- 统计所有调度单条数 -->
+  <select id="getToals" parameterType="com.domain.PageCriterias" resultType="Integer">
+  		select count(*)
+  		 from (select s.sfid
+  		from 
+  		dispatch d,staff s,warehouse w
+  		<where>
+  			 s.sfid = s.sfId
+  			 	<if test="null != beignDate and beignDate != ''">
+                and date&gt;=#{beignDate}
+            </if>
+           <if test="null != endDate and endDate != ''">
+                and date&lt;=#{endDate}
+            </if>
+  		</where>
+		GROUP BY dispId) 
+  		 as d 
+  
+  </select>
+  <!-- 查询调度单详细 -->
+  <select id="getDispatcherDetailById"  parameterType="com.domain.PageCriterias" resultType="com.domain.DispatchDetailVo">
+  			SELECT * 
+  			from dispItems ds,drugInfo dr
+  			<where>
+  				ds.diId = dr.diId
+  				<if test="dispid!=null">
+  					And dispid=#{dispid}
+  				</if>
+  			</where>
+			GROUP BY ds.diid
+			limit #{offset},#{pageSize}
+  </select>
+  <!-- 统计详细单的条目 -->
+  <select id="totalDetailEntry" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			select count(*)
+  		 from (SELECT dr.diid 
+  			from dispItems ds,drugInfo dr
+  			<where>
+  				ds.diId = dr.diId
+  				<if test="dispid!=null">
+  					And dispid=#{dispid}
+  				</if>
+  			</where>
+			GROUP BY ds.diid)
+  		  as d
+  </select>
+</mapper>

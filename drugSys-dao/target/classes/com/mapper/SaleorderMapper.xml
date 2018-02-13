@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.SaleorderMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Saleorder" >
+    <id column="tradeId" property="tradeid" jdbcType="VARCHAR" />
+    <result column="tradeTime" property="tradetime" jdbcType="DATE" />
+    <result column="sfId" property="sfid" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="DECIMAL" />
+    <result column="tradeType" property="tradetype" jdbcType="INTEGER" />
+    <result column="wId" property="wid" jdbcType="VARCHAR" />
+    <result column="ctId" property="ctid" jdbcType="VARCHAR" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tradeId, tradeTime, sfId, total, tradeType, wId, ctId, integral
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.SaleorderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from saleOrder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from saleOrder
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from saleOrder
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.SaleorderExample" >
+    delete from saleOrder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Saleorder" >
+    insert into saleOrder (tradeId, tradeTime, sfId, 
+      total, tradeType, wId, 
+      ctId, integral)
+    values (#{tradeid,jdbcType=VARCHAR}, #{tradetime,jdbcType=DATE}, #{sfid,jdbcType=VARCHAR}, 
+      #{total,jdbcType=DECIMAL}, #{tradetype,jdbcType=INTEGER}, #{wid,jdbcType=VARCHAR}, 
+      #{ctid,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Saleorder" >
+    insert into saleOrder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tradeid != null" >
+        tradeId,
+      </if>
+      <if test="tradetime != null" >
+        tradeTime,
+      </if>
+      <if test="sfid != null" >
+        sfId,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="tradetype != null" >
+        tradeType,
+      </if>
+      <if test="wid != null" >
+        wId,
+      </if>
+      <if test="ctid != null" >
+        ctId,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tradeid != null" >
+        #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="tradetime != null" >
+        #{tradetime,jdbcType=DATE},
+      </if>
+      <if test="sfid != null" >
+        #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="tradetype != null" >
+        #{tradetype,jdbcType=INTEGER},
+      </if>
+      <if test="wid != null" >
+        #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctid != null" >
+        #{ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.SaleorderExample" resultType="java.lang.Integer" >
+    select count(*) from saleOrder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update saleOrder
+    <set >
+      <if test="record.tradeid != null" >
+        tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradetime != null" >
+        tradeTime = #{record.tradetime,jdbcType=DATE},
+      </if>
+      <if test="record.sfid != null" >
+        sfId = #{record.sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradetype != null" >
+        tradeType = #{record.tradetype,jdbcType=INTEGER},
+      </if>
+      <if test="record.wid != null" >
+        wId = #{record.wid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctid != null" >
+        ctId = #{record.ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.integral != null" >
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update saleOrder
+    set tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      tradeTime = #{record.tradetime,jdbcType=DATE},
+      sfId = #{record.sfid,jdbcType=VARCHAR},
+      total = #{record.total,jdbcType=DECIMAL},
+      tradeType = #{record.tradetype,jdbcType=INTEGER},
+      wId = #{record.wid,jdbcType=VARCHAR},
+      ctId = #{record.ctid,jdbcType=VARCHAR},
+      integral = #{record.integral,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Saleorder" >
+    update saleOrder
+    <set >
+      <if test="tradetime != null" >
+        tradeTime = #{tradetime,jdbcType=DATE},
+      </if>
+      <if test="sfid != null" >
+        sfId = #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="tradetype != null" >
+        tradeType = #{tradetype,jdbcType=INTEGER},
+      </if>
+      <if test="wid != null" >
+        wId = #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctid != null" >
+        ctId = #{ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Saleorder" >
+    update saleOrder
+    set tradeTime = #{tradetime,jdbcType=DATE},
+      sfId = #{sfid,jdbcType=VARCHAR},
+      total = #{total,jdbcType=DECIMAL},
+      tradeType = #{tradetype,jdbcType=INTEGER},
+      wId = #{wid,jdbcType=VARCHAR},
+      ctId = #{ctid,jdbcType=VARCHAR},
+      integral = #{integral,jdbcType=INTEGER}
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </update>
+  <!-- 自己补充的方法 -->
+  <update id="updateOrderTradeType" parameterType="String">
+  	update saleOrder 
+	set tradeType = 2 where tradeId = #{whatever}
+  </update>
+  <select id="getAllSaled" resultMap="BaseResultMap">
+  	select * from saleOrder 
+  </select>
+  <select id="getAllSaleInfo" resultMap="BaseResultMap">
+  	select * from saleOrder where tradeType = 1
+  </select>
+</mapper>

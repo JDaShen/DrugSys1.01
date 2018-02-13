@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.PurchaseandgoodsrejectMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Purchaseandgoodsreject" >
+    <id column="tradeId" property="tradeid" jdbcType="VARCHAR" />
+    <result column="tradeTime" property="tradetime" jdbcType="DATE" />
+    <result column="sfId" property="sfid" jdbcType="VARCHAR" />
+    <result column="totalPrice" property="totalprice" jdbcType="DECIMAL" />
+    <result column="tradeType" property="tradetype" jdbcType="TINYINT" />
+    <result column="wId" property="wid" jdbcType="VARCHAR" />
+    <result column="splId" property="splid" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tradeId, tradeTime, sfId, totalPrice, tradeType, wId, splId, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.PurchaseandgoodsrejectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from purchaseAndGoodsReject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from purchaseAndGoodsReject
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from purchaseAndGoodsReject
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.PurchaseandgoodsrejectExample" >
+    delete from purchaseAndGoodsReject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Purchaseandgoodsreject" >
+    insert into purchaseAndGoodsReject (tradeId, tradeTime, sfId, 
+      totalPrice, tradeType, wId, 
+      splId, state)
+    values (#{tradeid,jdbcType=VARCHAR}, #{tradetime,jdbcType=DATE}, #{sfid,jdbcType=VARCHAR}, 
+      #{totalprice,jdbcType=DECIMAL}, #{tradetype,jdbcType=TINYINT}, #{wid,jdbcType=VARCHAR}, 
+      #{splid,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Purchaseandgoodsreject" >
+    insert into purchaseAndGoodsReject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tradeid != null" >
+        tradeId,
+      </if>
+      <if test="tradetime != null" >
+        tradeTime,
+      </if>
+      <if test="sfid != null" >
+        sfId,
+      </if>
+      <if test="totalprice != null" >
+        totalPrice,
+      </if>
+      <if test="tradetype != null" >
+        tradeType,
+      </if>
+      <if test="wid != null" >
+        wId,
+      </if>
+      <if test="splid != null" >
+        splId,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tradeid != null" >
+        #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="tradetime != null" >
+        #{tradetime,jdbcType=DATE},
+      </if>
+      <if test="sfid != null" >
+        #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null" >
+        #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="tradetype != null" >
+        #{tradetype,jdbcType=TINYINT},
+      </if>
+      <if test="wid != null" >
+        #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="splid != null" >
+        #{splid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.PurchaseandgoodsrejectExample" resultType="java.lang.Integer" >
+    select count(*) from purchaseAndGoodsReject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  
+<!--************************************************************************************************-->  
+  <!-- 自己写的方法 -->
+  <select id="getOrdersUndo" resultType="com.domain.Purchaseandgoodsreject">
+  	select * from purchaseAndGoodsReject where state = 0
+  </select>
+  
+  
+  <update id="updateOrderState" parameterType="String">
+	update purchaseAndGoodsReject 
+	set state = 1 where tradeId = #{whatever}
+  </update>
+  <update id="updateOrderStateRefuse" parameterType="String">
+	update purchaseAndGoodsReject 
+	set state = 2 where tradeId = #{whatever}
+  </update>
+  
+  
+<!--*************************************************************************************************-->  
+	<update id="updateByExampleSelective" parameterType="map" >
+    update purchaseAndGoodsReject
+    <set >
+      <if test="record.tradeid != null" >
+        tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradetime != null" >
+        tradeTime = #{record.tradetime,jdbcType=DATE},
+      </if>
+      <if test="record.sfid != null" >
+        sfId = #{record.sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalprice != null" >
+        totalPrice = #{record.totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradetype != null" >
+        tradeType = #{record.tradetype,jdbcType=TINYINT},
+      </if>
+      <if test="record.wid != null" >
+        wId = #{record.wid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.splid != null" >
+        splId = #{record.splid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update purchaseAndGoodsReject
+    set tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      tradeTime = #{record.tradetime,jdbcType=DATE},
+      sfId = #{record.sfid,jdbcType=VARCHAR},
+      totalPrice = #{record.totalprice,jdbcType=DECIMAL},
+      tradeType = #{record.tradetype,jdbcType=TINYINT},
+      wId = #{record.wid,jdbcType=VARCHAR},
+      splId = #{record.splid,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Purchaseandgoodsreject" >
+    update purchaseAndGoodsReject
+    <set >
+      <if test="tradetime != null" >
+        tradeTime = #{tradetime,jdbcType=DATE},
+      </if>
+      <if test="sfid != null" >
+        sfId = #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null" >
+        totalPrice = #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="tradetype != null" >
+        tradeType = #{tradetype,jdbcType=TINYINT},
+      </if>
+      <if test="wid != null" >
+        wId = #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="splid != null" >
+        splId = #{splid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Purchaseandgoodsreject" >
+    update purchaseAndGoodsReject
+    set tradeTime = #{tradetime,jdbcType=DATE},
+      sfId = #{sfid,jdbcType=VARCHAR},
+      totalPrice = #{totalprice,jdbcType=DECIMAL},
+      tradeType = #{tradetype,jdbcType=TINYINT},
+      wId = #{wid,jdbcType=VARCHAR},
+      splId = #{splid,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where tradeId = #{tradeid,jdbcType=VARCHAR}
+  </update>
+  
+   <!-- 条件查询分页 -->
+  <select id="getPgrInfoByCriterias" resultType="com.domain.PorderVo">
+  	select p.*,p.tradeTime as showTradetime,sf.sfName 
+  	from purchaseAndGoodsReject p
+	join staff sf on p.sfId = sf.sfId
+	<where>
+		<if test="splid != null and splid != ''">
+			splId = '${splid}'
+		</if>
+		<if test="sfid != null and sfid != ''">
+			sfId = '${sfid}'
+		</if>
+	</where>
+	limit #{start},#{pageSize}
+  </select>
+  
+
+
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.SaleitemMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Saleitem" >
+    <id column="soItemId" property="soitemid" jdbcType="VARCHAR" />
+    <result column="tradeId" property="tradeid" jdbcType="VARCHAR" />
+    <result column="diId" property="diid" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="singelPrice" property="singelprice" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    soItemId, tradeId, diId, amount, singelPrice, discount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.SaleitemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from saleItem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from saleItem
+    where soItemId = #{soitemid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from saleItem
+    where soItemId = #{soitemid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.SaleitemExample" >
+    delete from saleItem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Saleitem" >
+    insert into saleItem (soItemId, tradeId, diId, 
+      amount, singelPrice, discount
+      )
+    values (#{soitemid,jdbcType=VARCHAR}, #{tradeid,jdbcType=VARCHAR}, #{diid,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{singelprice,jdbcType=DECIMAL}, #{discount,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Saleitem" >
+    insert into saleItem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="soitemid != null" >
+        soItemId,
+      </if>
+      <if test="tradeid != null" >
+        tradeId,
+      </if>
+      <if test="diid != null" >
+        diId,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="singelprice != null" >
+        singelPrice,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="soitemid != null" >
+        #{soitemid,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeid != null" >
+        #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="diid != null" >
+        #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="singelprice != null" >
+        #{singelprice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.SaleitemExample" resultType="java.lang.Integer" >
+    select count(*) from saleItem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update saleItem
+    <set >
+      <if test="record.soitemid != null" >
+        soItemId = #{record.soitemid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeid != null" >
+        tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diid != null" >
+        diId = #{record.diid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.singelprice != null" >
+        singelPrice = #{record.singelprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discount != null" >
+        discount = #{record.discount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update saleItem
+    set soItemId = #{record.soitemid,jdbcType=VARCHAR},
+      tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      diId = #{record.diid,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      singelPrice = #{record.singelprice,jdbcType=DECIMAL},
+      discount = #{record.discount,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Saleitem" >
+    update saleItem
+    <set >
+      <if test="tradeid != null" >
+        tradeId = #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="diid != null" >
+        diId = #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="singelprice != null" >
+        singelPrice = #{singelprice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where soItemId = #{soitemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Saleitem" >
+    update saleItem
+    set tradeId = #{tradeid,jdbcType=VARCHAR},
+      diId = #{diid,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      singelPrice = #{singelprice,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DOUBLE}
+    where soItemId = #{soitemid,jdbcType=VARCHAR}
+  </update>
+</mapper>

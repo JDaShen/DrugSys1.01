@@ -1,0 +1,13 @@
+[
+	{"id": "base", "text": "Base",
+		"children": [
+			{"id": "ajax", "text": "Ajax"},
+			{"id": "json", "text": "JSON"},
+			{"id": "date", "text": "Date"},
+			{"id": "control", "text": "Control"},
+			{"id": "messagebox", "text": "MessageBox"},
+			{"id": "window", "text": "Window"}
+		]
+	}
+
+]

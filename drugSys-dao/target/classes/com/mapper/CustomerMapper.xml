@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Customer" >
+    <id column="ctId" property="ctid" jdbcType="VARCHAR" />
+    <result column="ctName" property="ctname" jdbcType="VARCHAR" />
+    <result column="levelId" property="levelid" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+    <result column="consume" property="consume" jdbcType="DECIMAL" />
+    <result column="times" property="times" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="ctState" property="ctstate" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ctId, ctName, levelId, integral, consume, times, balance, ctState
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where ctId = #{ctid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from customer
+    where ctId = #{ctid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.CustomerExample" >
+    delete from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Customer" >
+    insert into customer (ctId, ctName, levelId, 
+      integral, consume, times, 
+      balance, ctState)
+    values (#{ctid,jdbcType=VARCHAR}, #{ctname,jdbcType=VARCHAR}, #{levelid,jdbcType=INTEGER}, 
+      #{integral,jdbcType=INTEGER}, #{consume,jdbcType=DECIMAL}, #{times,jdbcType=INTEGER}, 
+      #{balance,jdbcType=DECIMAL}, #{ctstate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ctid != null" >
+        ctId,
+      </if>
+      <if test="ctname != null" >
+        ctName,
+      </if>
+      <if test="levelid != null" >
+        levelId,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="consume != null" >
+        consume,
+      </if>
+      <if test="times != null" >
+        times,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="ctstate != null" >
+        ctState,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ctid != null" >
+        #{ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctname != null" >
+        #{ctname,jdbcType=VARCHAR},
+      </if>
+      <if test="levelid != null" >
+        #{levelid,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="consume != null" >
+        #{consume,jdbcType=DECIMAL},
+      </if>
+      <if test="times != null" >
+        #{times,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="ctstate != null" >
+        #{ctstate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.CustomerExample" resultType="java.lang.Integer" >
+    select count(*) from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer
+    <set >
+      <if test="record.ctid != null" >
+        ctId = #{record.ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctname != null" >
+        ctName = #{record.ctname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levelid != null" >
+        levelId = #{record.levelid,jdbcType=INTEGER},
+      </if>
+      <if test="record.integral != null" >
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.consume != null" >
+        consume = #{record.consume,jdbcType=DECIMAL},
+      </if>
+      <if test="record.times != null" >
+        times = #{record.times,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ctstate != null" >
+        ctState = #{record.ctstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer
+    set ctId = #{record.ctid,jdbcType=VARCHAR},
+      ctName = #{record.ctname,jdbcType=VARCHAR},
+      levelId = #{record.levelid,jdbcType=INTEGER},
+      integral = #{record.integral,jdbcType=INTEGER},
+      consume = #{record.consume,jdbcType=DECIMAL},
+      times = #{record.times,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=DECIMAL},
+      ctState = #{record.ctstate,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Customer" >
+    update customer
+    <set >
+      <if test="ctname != null" >
+        ctName = #{ctname,jdbcType=VARCHAR},
+      </if>
+      <if test="levelid != null" >
+        levelId = #{levelid,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="consume != null" >
+        consume = #{consume,jdbcType=DECIMAL},
+      </if>
+      <if test="times != null" >
+        times = #{times,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="ctstate != null" >
+        ctState = #{ctstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ctId = #{ctid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Customer" >
+    update customer
+    set ctName = #{ctname,jdbcType=VARCHAR},
+      levelId = #{levelid,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      consume = #{consume,jdbcType=DECIMAL},
+      times = #{times,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=DECIMAL},
+      ctState = #{ctstate,jdbcType=INTEGER}
+    where ctId = #{ctid,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询所有客户 -->
+  <select id="getAllCustomer" resultType="com.domain.ShowCustomerVO">
+  	select c.*,v.vipName,v.discount
+  	from customer c
+  	join vipLevel v
+  	on c.levelId = v.levelId
+  </select>
+  
+  
+  <select id="getAllCustomerPageBean" resultType="com.domain.CustomerShowVo">
+  	select c.*,v.vipName
+  	from customer c
+  	join vipLevel v
+  	on c.levelId = v.levelId
+  	limit #{start},#{pageSize}
+  </select>
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.PgritemMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Pgritem" >
+    <id column=" pgrItemId" property="pgritemid" jdbcType="VARCHAR" />
+    <result column="tradeId" property="tradeid" jdbcType="VARCHAR" />
+    <result column="diId" property="diid" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="batch" property="batch" jdbcType="VARCHAR" />
+    <result column="expire" property="expire" jdbcType="DATE" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pgrItemId, tradeId, diId, amount, batch, expire, mark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.PgritemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pgrItem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pgrItem
+    where " pgrItemId" = #{pgritemid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pgrItem
+    where " pgrItemId" = #{pgritemid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.PgritemExample" >
+    delete from pgrItem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Pgritem" >
+    insert into pgrItem 
+    values (#{pgritemid,jdbcType=VARCHAR}, #{tradeid,jdbcType=VARCHAR}, #{diid,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{batch,jdbcType=VARCHAR}, #{expire,jdbcType=DATE}, 
+      #{mark,jdbcType=VARCHAR})
+  </insert>
+  <!-- 自己写的sql -->
+  <insert id="insertInto" parameterType="com.domain.Pgritem" >
+    insert into pgrItem 
+    values 
+    (#{pgritemid},#{tradeid},#{diid},#{amount},#{batch},#{expire},#{mark})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Pgritem" >
+    insert into pgrItem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pgritemid != null" >
+        pgrItemId,
+      </if>
+      <if test="tradeid != null" >
+        tradeId,
+      </if>
+      <if test="diid != null" >
+        diId,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="batch != null" >
+        batch,
+      </if>
+      <if test="expire != null" >
+        expire,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pgritemid != null" >
+        #{pgritemid,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeid != null" >
+        #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="diid != null" >
+        #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="batch != null" >
+        #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null" >
+        #{expire,jdbcType=DATE},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.PgritemExample" resultType="java.lang.Integer" >
+    select count(*) from pgrItem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pgrItem
+    <set >
+      <if test="record.pgritemid != null" >
+        " pgrItemId" = #{record.pgritemid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeid != null" >
+        tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diid != null" >
+        diId = #{record.diid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.batch != null" >
+        batch = #{record.batch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expire != null" >
+        expire = #{record.expire,jdbcType=DATE},
+      </if>
+      <if test="record.mark != null" >
+        mark = #{record.mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pgrItem
+    set " pgrItemId" = #{record.pgritemid,jdbcType=VARCHAR},
+      tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      diId = #{record.diid,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      batch = #{record.batch,jdbcType=VARCHAR},
+      expire = #{record.expire,jdbcType=DATE},
+      mark = #{record.mark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Pgritem" >
+    update pgrItem
+    <set >
+      <if test="tradeid != null" >
+        tradeId = #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="diid != null" >
+        diId = #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="batch != null" >
+        batch = #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null" >
+        expire = #{expire,jdbcType=DATE},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where " pgrItemId" = #{pgritemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Pgritem" >
+    update pgrItem
+    set tradeId = #{tradeid,jdbcType=VARCHAR},
+      diId = #{diid,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      batch = #{batch,jdbcType=VARCHAR},
+      expire = #{expire,jdbcType=DATE},
+      mark = #{mark,jdbcType=VARCHAR}
+    where " pgrItemId" = #{pgritemid,jdbcType=VARCHAR}
+  </update>
+</mapper>

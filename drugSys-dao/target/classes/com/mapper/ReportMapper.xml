@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ReportMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Report" >
+    <id column="rId" property="rid" jdbcType="VARCHAR" />
+    <result column="rType" property="rtype" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="wid" property="wid" jdbcType="VARCHAR" />
+    <result column="sfid" property="sfid" jdbcType="VARCHAR" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rId, rType, date, wid, sfid, mark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.ReportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from report
+    where rId = #{rid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from report
+    where rId = #{rid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.ReportExample" >
+    delete from report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Report" >
+    insert into report (rId, rType, date, 
+      wid, sfid, mark)
+    values (#{rid,jdbcType=VARCHAR}, #{rtype,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
+      #{wid,jdbcType=VARCHAR}, #{sfid,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Report" >
+    insert into report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rId,
+      </if>
+      <if test="rtype != null" >
+        rType,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="wid != null" >
+        wid,
+      </if>
+      <if test="sfid != null" >
+        sfid,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="rtype != null" >
+        #{rtype,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="wid != null" >
+        #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfid != null" >
+        #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.ReportExample" resultType="java.lang.Integer" >
+    select count(*) from report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update report
+    <set >
+      <if test="record.rid != null" >
+        rId = #{record.rid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtype != null" >
+        rType = #{record.rtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.wid != null" >
+        wid = #{record.wid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfid != null" >
+        sfid = #{record.sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mark != null" >
+        mark = #{record.mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update report
+    set rId = #{record.rid,jdbcType=VARCHAR},
+      rType = #{record.rtype,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      wid = #{record.wid,jdbcType=VARCHAR},
+      sfid = #{record.sfid,jdbcType=VARCHAR},
+      mark = #{record.mark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Report" >
+    update report
+    <set >
+      <if test="rtype != null" >
+        rType = #{rtype,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="wid != null" >
+        wid = #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfid != null" >
+        sfid = #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rId = #{rid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Report" >
+    update report
+    set rType = #{rtype,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      wid = #{wid,jdbcType=VARCHAR},
+      sfid = #{sfid,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=VARCHAR}
+    where rId = #{rid,jdbcType=VARCHAR}
+  </update>
+  <!-- 条件查询,时间段查询 -->
+  <select id="getAllReports" parameterType="com.domain.PageCriterias" resultType="com.domain.Report" >
+  			SELECT * 
+  			FROM
+			report rp,staff s
+			<where>
+				rp.sfid= s.sfId 
+			<if test="null != beignDate and beignDate != ''">
+                and date&gt;=#{beignDate}
+            </if>
+           <if test="null != endDate and endDate != ''">
+                and date&lt;=#{endDate}
+            </if>
+			</where>
+				group by rid
+				limit #{offset},#{pageSize}
+  </select>
+   <!-- 统计所有报告单条目 -->
+  <select id="getTotalReportEntry" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			select count(*) 
+  			from (SELECT rp.rid
+  			FROM
+			report rp,staff s
+			<where>
+				rp.sfid= s.sfId 
+			<if test="null != beignDate and beignDate != ''">
+                and date&gt;=#{beignDate}
+            </if>
+           <if test="null != endDate and endDate != ''">
+                and date&lt;=#{endDate}
+            </if>
+			</where>
+				group by rid) 
+  			as f
+  </select>
+   <!-- 统计所有符合报告单条目详细 -->
+  <select id="getTotalRDetailEntry" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			select count(*) from
+  			(SELECT d.diId
+  			from 
+				rpItems rp ,drugInfo d
+		<where>
+			d.diId = rp.diID
+			<if test="rid!=null and rid!=''">
+					and rid=#{rid}
+			</if>
+		</where>
+			GROUP BY rp.diId) 
+  			as k
+  
+  </select>
+  <!-- 根据ID查询所有详细 -->
+  <select id="getAllReportDetailsById" parameterType="com.domain.PageCriterias" resultType="com.domain.DispatchDetailVo">
+  			SELECT * 
+  			from 
+				rpItems rp ,drugInfo d
+		<where>
+			d.diId = rp.diID
+			<if test="rid!=null and rid!=''">
+					and rid=#{rid}
+			</if>
+		</where>
+			GROUP BY rp.diId
+			limit #{offset},#{pageSize}
+  </select>
+</mapper>

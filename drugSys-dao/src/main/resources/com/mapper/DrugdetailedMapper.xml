@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.DrugdetailedMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Drugdetailed" >
+    <id column="ddId" property="ddid" jdbcType="VARCHAR" />
+    <result column="ddName" property="ddname" jdbcType="VARCHAR" />
+    <result column="dtId" property="dtid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ddId, ddName, dtId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.DrugdetailedExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from drugDetailed
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from drugDetailed
+    where ddId = #{ddid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from drugDetailed
+    where ddId = #{ddid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.DrugdetailedExample" >
+    delete from drugDetailed
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Drugdetailed" >
+    insert into drugDetailed (ddId, ddName, dtId
+      )
+    values (#{ddid,jdbcType=VARCHAR}, #{ddname,jdbcType=VARCHAR}, #{dtid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Drugdetailed" >
+    insert into drugDetailed
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ddid != null" >
+        ddId,
+      </if>
+      <if test="ddname != null" >
+        ddName,
+      </if>
+      <if test="dtid != null" >
+        dtId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ddid != null" >
+        #{ddid,jdbcType=VARCHAR},
+      </if>
+      <if test="ddname != null" >
+        #{ddname,jdbcType=VARCHAR},
+      </if>
+      <if test="dtid != null" >
+        #{dtid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.DrugdetailedExample" resultType="java.lang.Integer" >
+    select count(*) from drugDetailed
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update drugDetailed
+    <set >
+      <if test="record.ddid != null" >
+        ddId = #{record.ddid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ddname != null" >
+        ddName = #{record.ddname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dtid != null" >
+        dtId = #{record.dtid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update drugDetailed
+    set ddId = #{record.ddid,jdbcType=VARCHAR},
+      ddName = #{record.ddname,jdbcType=VARCHAR},
+      dtId = #{record.dtid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Drugdetailed" >
+    update drugDetailed
+    <set >
+      <if test="ddname != null" >
+        ddName = #{ddname,jdbcType=VARCHAR},
+      </if>
+      <if test="dtid != null" >
+        dtId = #{dtid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ddId = #{ddid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Drugdetailed" >
+    update drugDetailed
+    set ddName = #{ddname,jdbcType=VARCHAR},
+      dtId = #{dtid,jdbcType=VARCHAR}
+    where ddId = #{ddid,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询 所有药品 分类 -->
+  <select id="showAllDetails" resultType="com.domain.Drugdetailed">
+  	select * from drugDetailed dd,drugTotal dt
+  	<where>
+  		dd.dtId = dt.dtId
+		<if test="name != null and name != ''">
+			and dd.ddName like '%${name}%' or dt.dtName like '%${name}%' 
+		</if>
+	</where>
+	 GROUP BY dd.ddId limit #{startIndex} , #{pageSize} 
+  </select>
+  
+  <!-- 查询 所有药品 分类 的数量 -->
+  <select id="getDetailCount" parameterType="String" resultType="Integer">
+  	select count(1) from drugDetailed dd,drugTotal dt
+	<where>
+		dd.dtId = dt.dtId
+  		<if test="name != null and name != ''">
+			and dd.ddName like '%${name}%' or dt.dtName like '%${name}%' 
+		</if>
+	</where>
+  </select>
+  
+  <!-- 批量删除类别 -->
+  <delete id="deleteDetail" parameterType="String">
+		delete from drugDetailed where ddId in
+		<foreach collection="array" item="ddid" separator="," open="(" close=")">
+			#{ddid}
+		</foreach>
+	</delete>
+  
+</mapper>

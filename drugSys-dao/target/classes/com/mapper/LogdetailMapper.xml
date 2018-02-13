@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.LogdetailMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Logdetail" >
+    <id column="logId" property="logid" jdbcType="VARCHAR" />
+    <result column="tradeId" property="tradeid" jdbcType="VARCHAR" />
+    <result column="tradeTime" property="tradetime" jdbcType="DATE" />
+    <result column="diId" property="diid" jdbcType="VARCHAR" />
+    <result column="inQty" property="inqty" jdbcType="INTEGER" />
+    <result column="outQty" property="outqty" jdbcType="INTEGER" />
+    <result column="wid" property="wid" jdbcType="VARCHAR" />
+    <result column="batch" property="batch" jdbcType="VARCHAR" />
+    <result column="expire" property="expire" jdbcType="DATE" />
+    <result column="supplier" property="supplier" jdbcType="VARCHAR" />
+    <result column="sfId" property="sfid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    logId, tradeId, tradeTime, diId, inQty, outQty, wid, batch, expire, supplier, sfId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.LogdetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from logDetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from logDetail
+    where logId = #{logid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from logDetail
+    where logId = #{logid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.LogdetailExample" >
+    delete from logDetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Logdetail" >
+    insert into logDetail (logId, tradeId, tradeTime, 
+      diId, inQty, outQty, 
+      wid, batch, expire, supplier, 
+      sfId,info)
+    values (#{logid,jdbcType=VARCHAR}, #{tradeid,jdbcType=VARCHAR}, #{tradetime,jdbcType=DATE}, 
+      #{diid,jdbcType=VARCHAR}, #{inqty,jdbcType=INTEGER}, #{outqty,jdbcType=INTEGER}, 
+      #{wid,jdbcType=VARCHAR}, #{batch,jdbcType=VARCHAR}, #{expire,jdbcType=DATE}, #{supplier,jdbcType=VARCHAR}, 
+      #{sfid,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Logdetail" >
+    insert into logDetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        logId,
+      </if>
+      <if test="tradeid != null" >
+        tradeId,
+      </if>
+      <if test="tradetime != null" >
+        tradeTime,
+      </if>
+      <if test="diid != null" >
+        diId,
+      </if>
+      <if test="inqty != null" >
+        inQty,
+      </if>
+      <if test="outqty != null" >
+        outQty,
+      </if>
+      <if test="wid != null" >
+        wid,
+      </if>
+      <if test="batch != null" >
+        batch,
+      </if>
+      <if test="expire != null" >
+        expire,
+      </if>
+      <if test="supplier != null" >
+        supplier,
+      </if>
+      <if test="sfid != null" >
+        sfId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        #{logid,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeid != null" >
+        #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="tradetime != null" >
+        #{tradetime,jdbcType=DATE},
+      </if>
+      <if test="diid != null" >
+        #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="inqty != null" >
+        #{inqty,jdbcType=INTEGER},
+      </if>
+      <if test="outqty != null" >
+        #{outqty,jdbcType=INTEGER},
+      </if>
+      <if test="wid != null" >
+        #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="batch != null" >
+        #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null" >
+        #{expire,jdbcType=DATE},
+      </if>
+      <if test="supplier != null" >
+        #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="sfid != null" >
+        #{sfid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.LogdetailExample" resultType="java.lang.Integer" >
+    select count(*) from logDetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update logDetail
+    <set >
+      <if test="record.logid != null" >
+        logId = #{record.logid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeid != null" >
+        tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradetime != null" >
+        tradeTime = #{record.tradetime,jdbcType=DATE},
+      </if>
+      <if test="record.diid != null" >
+        diId = #{record.diid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inqty != null" >
+        inQty = #{record.inqty,jdbcType=INTEGER},
+      </if>
+      <if test="record.outqty != null" >
+        outQty = #{record.outqty,jdbcType=INTEGER},
+      </if>
+      <if test="record.wid != null" >
+        wid = #{record.wid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batch != null" >
+        batch = #{record.batch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expire != null" >
+        expire = #{record.expire,jdbcType=DATE},
+      </if>
+      <if test="record.supplier != null" >
+        supplier = #{record.supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfid != null" >
+        sfId = #{record.sfid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update logDetail
+    set logId = #{record.logid,jdbcType=VARCHAR},
+      tradeId = #{record.tradeid,jdbcType=VARCHAR},
+      tradeTime = #{record.tradetime,jdbcType=DATE},
+      diId = #{record.diid,jdbcType=VARCHAR},
+      inQty = #{record.inqty,jdbcType=INTEGER},
+      outQty = #{record.outqty,jdbcType=INTEGER},
+      wid = #{record.wid,jdbcType=VARCHAR},
+      batch = #{record.batch,jdbcType=VARCHAR},
+      expire = #{record.expire,jdbcType=DATE},
+      supplier = #{record.supplier,jdbcType=VARCHAR},
+      sfId = #{record.sfid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Logdetail" >
+    update logDetail
+    <set >
+      <if test="tradeid != null" >
+        tradeId = #{tradeid,jdbcType=VARCHAR},
+      </if>
+      <if test="tradetime != null" >
+        tradeTime = #{tradetime,jdbcType=DATE},
+      </if>
+      <if test="diid != null" >
+        diId = #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="inqty != null" >
+        inQty = #{inqty,jdbcType=INTEGER},
+      </if>
+      <if test="outqty != null" >
+        outQty = #{outqty,jdbcType=INTEGER},
+      </if>
+      <if test="wid != null" >
+        wid = #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="batch != null" >
+        batch = #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null" >
+        expire = #{expire,jdbcType=DATE},
+      </if>
+      <if test="supplier != null" >
+        supplier = #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="sfid != null" >
+        sfId = #{sfid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logId = #{logid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Logdetail" >
+    update logDetail
+    set tradeId = #{tradeid,jdbcType=VARCHAR},
+      tradeTime = #{tradetime,jdbcType=DATE},
+      diId = #{diid,jdbcType=VARCHAR},
+      inQty = #{inqty,jdbcType=INTEGER},
+      outQty = #{outqty,jdbcType=INTEGER},
+      wid = #{wid,jdbcType=VARCHAR},
+      batch = #{batch,jdbcType=VARCHAR},
+      expire = #{expire,jdbcType=DATE},
+      supplier = #{supplier,jdbcType=VARCHAR},
+      sfId = #{sfid,jdbcType=VARCHAR}
+    where logId = #{logid,jdbcType=VARCHAR}
+  </update>
+  <!-- 更新盘点状态 -->
+  <update id="updateState" parameterType="String">
+  		update logDetail set state = 1
+  		where diid=#{value}
+  </update>
+  <!-- 统计信息 ,无嵌套查询，添加商品是那个嵌套查询没有必要，给定仓库，按药品编号统计就行了，不是详细展示-->
+  <select id="getStockSummary" parameterType="com.domain.PageCriterias" resultType="com.domain.StockSumVo">
+  		SELECT d.diId,d.diName,commonName,drugUnit,specification,drugType,approval,miniStock,singelPrice,(SUM(inQty)-SUM(outQty)) as amount,((SUM(inQty)-SUM(outQty))*singelPrice) as total,d.manufacturer,expire,wid
+			from drugInfo d,logDetail log
+			<where>
+				d.diId = log.diId
+				<if test="wid!=null and wid!=''">
+						and wid=#{wid}
+				</if>
+				<if test="diname!=null and diname!=''">
+								and diname like '%${diname}%'
+				</if>
+			</where> 
+			GROUP BY log.diId
+			limit #{offset},#{pageSize}
+  </select>
+  <!-- 获取符合条件的总条数 -->
+  <select id="getToal" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			select count(1) 
+  			from (SELECT d.diId,d.diName,commonName,drugUnit,specification,drugType,approval,miniStock,singelPrice,d.manufacturer,expire,wid
+			from drugInfo d,logDetail log
+			<where>
+				d.diId = log.diId
+				<if test="wid!=null and wid!=''">
+						and wid=#{wid}
+				</if>
+				<if test="diname!=null and diname!=''">
+					and diname like '%${diname}%'
+				</if>
+			</where> 
+			GROUP BY log.diId) 
+  			as B
+  </select>
+  <!-- 根据diid获取商品流动信息 -->
+  <select id="getGoodsChangeByDiid" parameterType="com.domain.PageCriterias" resultType="com.domain.Logdetail">
+  			select * 
+  			from logDetail
+  			<where>
+  					diid = #{diid}
+  			</where>
+  				group by logid
+  				limit #{offset},#{pageSize}
+  </select>
+  <!-- 获取符合条件的总条数 -->
+  <select id="goodsToal" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			select count(1) 
+  			from (select * 
+  			from logDetail
+  			<where>
+  					diid = #{diid}
+  			</where>
+  				group by logid) 
+  				as B
+  </select>
+  <!-- 过期查询 -->
+  <select id="getExpireGoods" parameterType="com.domain.PageCriterias" resultType="com.domain.StockSumVo">
+  		SELECT d.diId,d.diName,commonName,drugUnit,specification,drugType,approval,miniStock,singelPrice,(SUM(inQty)-SUM(outQty)) as amount,((SUM(inQty)-SUM(outQty))*singelPrice) as total,d.manufacturer,expire,wid
+			from drugInfo d,logDetail log
+			<where>
+				d.diId = log.diId
+                and expire&lt;=#{today}
+			</where> 
+			GROUP BY log.diId
+			limit #{offset},#{pageSize}
+  </select>
+  <!-- 获取符合条件的总过期条数 -->
+  <select id="getTotalExpire" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			select count(1) 
+  			from (SELECT d.diId,d.diName,commonName,drugUnit,specification,drugType,approval,miniStock,singelPrice,(SUM(inQty)-SUM(outQty)) as amount,((SUM(inQty)-SUM(outQty))*singelPrice) as total,d.manufacturer,expire,wid
+			from drugInfo d,logDetail log
+			<where>
+				d.diId = log.diId
+                and expire&lt;=#{today}
+			</where> 
+			GROUP BY log.diId) 
+  				as B
+  </select>
+  <!-- 报警查询 -->
+  <select id="getWarningGoods" parameterType="com.domain.PageCriterias" resultType="com.domain.StockSumVo">
+				  		SELECT * 
+				from 
+				drugInfo d,(SELECT diId,(SUM(inQty)-SUM(outQty)) as amount,wid,expire
+				from logDetail 
+				GROUP BY diId) as A
+				<where>
+					A.diId = d.diId 
+					and A.amount&lt;=d.miniStock
+				</where>
+				GROUP BY d.diId
+			limit #{offset},#{pageSize}
+  </select>
+  <!-- 获取符合条件的总报警条数 -->
+  <select id="getTotalWarning" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			SELECT COUNT(*) FROM (SELECT barCode  from 
+				drugInfo d,(SELECT diId,(SUM(inQty)-SUM(outQty)) as amount
+				from logDetail log
+				GROUP BY diId) as A
+				where
+					A.diId = d.diId 
+					and A.amount&lt;=d.miniStock				
+				GROUP BY d.diId) as g
+  </select>
+  <!-- 未盘点 -->
+  <select id="getAllPendCheckGoods" parameterType="com.domain.PageCriterias" resultType="DispatchDetailVo">
+  			SELECT * from drugInfo dr ,logDetail log
+					<where>
+					dr.diId = log.diId
+					and state = #{state}
+					<if test="wid!=null and wid!=''">
+							and wid = #{wid}
+					</if>
+					</where>
+					GROUP BY dr.diId
+					limit #{offset},#{pageSize}
+  </select>
+ <!-- 统计未盘点条目 -->
+  <!-- 获取符合条件的总报警条数 -->
+  <select id="getAllPendCheckGoodssEntry" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			SELECT COUNT(*) FROM 
+  			(
+  				SELECT dr.diid from drugInfo dr ,logDetail log
+					<where>
+					dr.diId = log.diId
+					and state = #{state}
+					<if test="wid!=null and wid!=''">
+							and wid = #{wid}
+					</if>
+					</where>
+					GROUP BY dr.diId
+  			)as g
+  </select>
+</mapper>

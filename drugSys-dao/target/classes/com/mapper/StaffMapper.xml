@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.StaffMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Staff" >
+    <id column="sfId" property="sfid" jdbcType="VARCHAR" />
+    <result column="jobId" property="jobid" jdbcType="VARCHAR" />
+    <result column="sfName" property="sfname" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="DECIMAL" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="sfPhoneNo" property="sfphoneno" jdbcType="VARCHAR" />
+    <result column="sfAddress" property="sfaddress" jdbcType="VARCHAR" />
+    <result column="sfState" property="sfstate" jdbcType="INTEGER" />
+    <result column="sfRemarks" property="sfremarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sfId, jobId, sfName, salary, birthday, sfPhoneNo, sfAddress, sfState, sfRemarks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.StaffExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from staff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from staff
+    where sfId = #{sfid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from staff
+    where sfId = #{sfid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.StaffExample" >
+    delete from staff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Staff" >
+    insert into staff (sfId, jobId, sfName, 
+      salary, birthday, sfPhoneNo, 
+      sfAddress, sfState, sfRemarks
+      )
+    values (#{sfid,jdbcType=VARCHAR}, #{jobid,jdbcType=VARCHAR}, #{sfname,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=DECIMAL}, #{birthday,jdbcType=DATE}, #{sfphoneno,jdbcType=VARCHAR}, 
+      #{sfaddress,jdbcType=VARCHAR}, #{sfstate,jdbcType=INTEGER}, #{sfremarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Staff" >
+    insert into staff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sfid != null" >
+        sfId,
+      </if>
+      <if test="jobid != null" >
+        jobId,
+      </if>
+      <if test="sfname != null" >
+        sfName,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="sfphoneno != null" >
+        sfPhoneNo,
+      </if>
+      <if test="sfaddress != null" >
+        sfAddress,
+      </if>
+      <if test="sfstate != null" >
+        sfState,
+      </if>
+      <if test="sfremarks != null" >
+        sfRemarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sfid != null" >
+        #{sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="jobid != null" >
+        #{jobid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfname != null" >
+        #{sfname,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=DECIMAL},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sfphoneno != null" >
+        #{sfphoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="sfaddress != null" >
+        #{sfaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sfstate != null" >
+        #{sfstate,jdbcType=INTEGER},
+      </if>
+      <if test="sfremarks != null" >
+        #{sfremarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.StaffExample" resultType="java.lang.Integer" >
+    select count(*) from staff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update staff
+    <set >
+      <if test="record.sfid != null" >
+        sfId = #{record.sfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobid != null" >
+        jobId = #{record.jobid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfname != null" >
+        sfName = #{record.sfname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null" >
+        salary = #{record.salary,jdbcType=DECIMAL},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.sfphoneno != null" >
+        sfPhoneNo = #{record.sfphoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfaddress != null" >
+        sfAddress = #{record.sfaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfstate != null" >
+        sfState = #{record.sfstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.sfremarks != null" >
+        sfRemarks = #{record.sfremarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update staff
+    set sfId = #{record.sfid,jdbcType=VARCHAR},
+      jobId = #{record.jobid,jdbcType=VARCHAR},
+      sfName = #{record.sfname,jdbcType=VARCHAR},
+      salary = #{record.salary,jdbcType=DECIMAL},
+      birthday = #{record.birthday,jdbcType=DATE},
+      sfPhoneNo = #{record.sfphoneno,jdbcType=VARCHAR},
+      sfAddress = #{record.sfaddress,jdbcType=VARCHAR},
+      sfState = #{record.sfstate,jdbcType=INTEGER},
+      sfRemarks = #{record.sfremarks,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Staff" >
+    update staff
+    <set >
+      <if test="jobid != null" >
+        jobId = #{jobid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfname != null" >
+        sfName = #{sfname,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        salary = #{salary,jdbcType=DECIMAL},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sfphoneno != null" >
+        sfPhoneNo = #{sfphoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="sfaddress != null" >
+        sfAddress = #{sfaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sfstate != null" >
+        sfState = #{sfstate,jdbcType=INTEGER},
+      </if>
+      <if test="sfremarks != null" >
+        sfRemarks = #{sfremarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sfId = #{sfid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Staff" >
+    update staff
+    set jobId = #{jobid,jdbcType=VARCHAR},
+      sfName = #{sfname,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=DECIMAL},
+      birthday = #{birthday,jdbcType=DATE},
+      sfPhoneNo = #{sfphoneno,jdbcType=VARCHAR},
+      sfAddress = #{sfaddress,jdbcType=VARCHAR},
+      sfState = #{sfstate,jdbcType=INTEGER},
+      sfRemarks = #{sfremarks,jdbcType=VARCHAR}
+    where sfId = #{sfid,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="countByCriteria" resultType="java.lang.Integer">
+  	select count(*) from staff
+  	<where>
+  		<if test="querysfName != null and querysfName != ''">
+  			and sfName like '%${querysfName}%'
+  		</if>
+  		<if test="querysfAddress != null and querysfAddress != ''">
+  			and sfAddress like '%${querysfAddress}%'
+  		</if>
+  		<if test="querysfState != null">
+  			and sfState = ${querysfState}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="selectStaffPageBean" resultType="com.domain.StaffShowVo">
+  	select s.*, s.birthday as sfBirthday,j.jobName
+  	from staff s
+  	join job j on s.jobId = j.jobId
+  	<where>
+  		<if test="querysfName != null and querysfName != ''">
+  			and sfName like '%${querysfName}%'
+  		</if>
+  		<if test="querysfAddress != null and querysfAddress != ''">
+  			and sfAddress like '%${querysfAddress}%'
+  		</if>
+  		<if test="querysfState != null">
+  			and sfState = ${querysfState}
+  		</if>
+  	</where>
+  	limit #{start},#{pageSize}
+  </select>
+</mapper>

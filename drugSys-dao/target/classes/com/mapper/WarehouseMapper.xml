@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.WarehouseMapper" >
+<!-- 统计库存信息 -->
+<select id="getAllGoodsInfo" parameterType="PageCriterias" resultType="GoodsVo">
+SELECT logId,tradeId,tradeTime,diId,diName,wName,manufacturer,(SUM(inQty)-SUM(outQty)) as reals,expire
+	FROM (select logId,tradeId,tradeTime,d.diId,diName,wName,manufacturer,inQty,outQty,l.expire
+						from 
+								logDetail l,drugInfo d,staff s,warehouse w
+						<where>
+						l.diid = d.diid and l.sfid = s.sfid and w.wid = l.wid 
+						<if test="wid!=null and wid!=''">
+								and w.wid=#{wid}
+						</if>
+						</where>
+						GROUP BY  logId) 
+						as A
+							<where>
+							<if test="diname!=null and diname!=''">
+								and diname like '%${diname}%'
+						</if>
+						</where>
+						GROUP BY diid
+						limit #{offset},#{pageSize}
+</select>
+<!-- 统计符合条件的数据条数 -->
+<select id="getTotal" parameterType="PageCriterias" resultType="Integer">
+		select count(1) 
+		from (SELECT logId,tradeId,tradeTime,diId,diName,wName,manufacturer,(SUM(rea)) as reals,expire
+	FROM (select logId,tradeId,tradeTime,d.diId,diName,wName,manufacturer,(SUM(inQty)-SUM(outQty)) as rea,l.expire
+						from 
+								logDetail l,drugInfo d,staff s,warehouse w
+						<where>
+						l.diid = d.diid and l.sfid = s.sfid and w.wid = l.wid 
+						<if test="wid!=null and wid!=''">
+								and w.wid=#{wid}
+						</if>
+						</where>
+						GROUP BY  logId) 
+						as A
+						<where>
+							<if test="diname!=null and diname!=''">
+								and diname like '%${diname}%'
+						</if>
+						</where>
+						GROUP BY diid) 
+						as b
+</select>
+  <resultMap id="BaseResultMap" type="com.domain.Warehouse" >
+    <id column="wId" property="wid" jdbcType="VARCHAR" />
+    <result column="wName" property="wname" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wId, wName, location
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.WarehouseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from warehouse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from warehouse
+    where wId = #{wid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from warehouse
+    where wId = #{wid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.WarehouseExample" >
+    delete from warehouse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Warehouse" >
+    insert into warehouse (wId, wName, location
+      )
+    values (#{wid,jdbcType=VARCHAR}, #{wname,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Warehouse" >
+    insert into warehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wid != null" >
+        wId,
+      </if>
+      <if test="wname != null" >
+        wName,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wid != null" >
+        #{wid,jdbcType=VARCHAR},
+      </if>
+      <if test="wname != null" >
+        #{wname,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.WarehouseExample" resultType="java.lang.Integer" >
+    select count(*) from warehouse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update warehouse
+    <set >
+      <if test="record.wid != null" >
+        wId = #{record.wid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wname != null" >
+        wName = #{record.wname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update warehouse
+    set wId = #{record.wid,jdbcType=VARCHAR},
+      wName = #{record.wname,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Warehouse" >
+    update warehouse
+    <set >
+      <if test="wname != null" >
+        wName = #{wname,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wId = #{wid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Warehouse" >
+    update warehouse
+    set wName = #{wname,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR}
+    where wId = #{wid,jdbcType=VARCHAR}
+  </update>
+</mapper>

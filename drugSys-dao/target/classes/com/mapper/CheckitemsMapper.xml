@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.CheckitemsMapper" >
+  <resultMap id="BaseResultMap" type="com.domain.Checkitems" >
+    <id column="itemId" property="itemid" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="VARCHAR" />
+    <result column="diId" property="diid" jdbcType="VARCHAR" />
+    <result column="diName" property="diname" jdbcType="VARCHAR" />
+    <result column="wqty" property="wqty" jdbcType="INTEGER" />
+    <result column="rqty" property="rqty" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    itemId, cid, diId, diName, wqty, rqty
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.domain.CheckitemsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from checkItems
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from checkItems
+    where itemId = #{itemid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from checkItems
+    where itemId = #{itemid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.domain.CheckitemsExample" >
+    delete from checkItems
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.domain.Checkitems" >
+    insert into checkItems (itemId, cid, diId, 
+      diName, wqty, rqty)
+    values (#{itemid,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR}, #{diid,jdbcType=VARCHAR}, 
+      #{diname,jdbcType=VARCHAR}, #{wqty,jdbcType=INTEGER}, #{rqty,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.domain.Checkitems" >
+    insert into checkItems
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        itemId,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="diid != null" >
+        diId,
+      </if>
+      <if test="diname != null" >
+        diName,
+      </if>
+      <if test="wqty != null" >
+        wqty,
+      </if>
+      <if test="rqty != null" >
+        rqty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        #{itemid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="diid != null" >
+        #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="diname != null" >
+        #{diname,jdbcType=VARCHAR},
+      </if>
+      <if test="wqty != null" >
+        #{wqty,jdbcType=INTEGER},
+      </if>
+      <if test="rqty != null" >
+        #{rqty,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.domain.CheckitemsExample" resultType="java.lang.Integer" >
+    select count(*) from checkItems
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update checkItems
+    <set >
+      <if test="record.itemid != null" >
+        itemId = #{record.itemid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diid != null" >
+        diId = #{record.diid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diname != null" >
+        diName = #{record.diname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wqty != null" >
+        wqty = #{record.wqty,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqty != null" >
+        rqty = #{record.rqty,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update checkItems
+    set itemId = #{record.itemid,jdbcType=VARCHAR},
+      cid = #{record.cid,jdbcType=VARCHAR},
+      diId = #{record.diid,jdbcType=VARCHAR},
+      diName = #{record.diname,jdbcType=VARCHAR},
+      wqty = #{record.wqty,jdbcType=INTEGER},
+      rqty = #{record.rqty,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Checkitems" >
+    update checkItems
+    <set >
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="diid != null" >
+        diId = #{diid,jdbcType=VARCHAR},
+      </if>
+      <if test="diname != null" >
+        diName = #{diname,jdbcType=VARCHAR},
+      </if>
+      <if test="wqty != null" >
+        wqty = #{wqty,jdbcType=INTEGER},
+      </if>
+      <if test="rqty != null" >
+        rqty = #{rqty,jdbcType=INTEGER},
+      </if>
+    </set>
+    where itemId = #{itemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Checkitems" >
+    update checkItems
+    set cid = #{cid,jdbcType=VARCHAR},
+      diId = #{diid,jdbcType=VARCHAR},
+      diName = #{diname,jdbcType=VARCHAR},
+      wqty = #{wqty,jdbcType=INTEGER},
+      rqty = #{rqty,jdbcType=INTEGER}
+    where itemId = #{itemid,jdbcType=VARCHAR}
+  </update>
+    <!-- 根据ID查询所有详细 -->
+  <select id="getAllDetailByCid" parameterType="com.domain.PageCriterias" resultType="com.domain.DispatchDetailVo">
+  			SELECT * 
+				from
+				 checkItems ci,drugInfo  d
+		<where>
+			ci.diId = d.diId
+		   and  cid=#{cid}
+		</where>
+				GROUP BY ci.diId
+			limit #{offset},#{pageSize}
+  </select>
+  <!-- 根据id统计对应的详细条目 -->
+  <select id="getTotalDetailEntryById" parameterType="com.domain.PageCriterias" resultType="Integer">
+  			select count(*) from 
+  			(SELECT d.diid
+				from
+				 checkItems ci,drugInfo  d
+		<where>
+			ci.diId = d.diId
+		   and  cid=#{cid}
+		</where>
+				GROUP BY ci.diId)
+  			as hello
+  </select>
+</mapper>

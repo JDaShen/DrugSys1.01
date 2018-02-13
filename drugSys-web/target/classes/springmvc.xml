@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<!-- 配置controller 扫描器 -->
+	<context:component-scan base-package="com.controller"></context:component-scan>
+	
+	<!-- 自动加载推荐的处理器映射器和适配器 -->
+	<mvc:annotation-driven conversion-service="conversionServiceFactory"></mvc:annotation-driven>
+	
+	<!-- 自定义日期转换器 -->
+	 <bean name="conversionServiceFactory" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.converters.DateConverter"></bean>
+			</list>
+		</property>
+	</bean> 
+	
+	<!-- 配置适配器解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 指定视图的前缀 -->
+		<property name="prefix" value="/WEB-INF/pages"/>
+		<!-- 指定视图的后缀 -->
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 配置拦截器，登陆拦截器 -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/user/toLogin.action"/>
+			<bean class="com.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+</beans>
